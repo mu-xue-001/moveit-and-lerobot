@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Gazebo 材质和属性配置 -->
+    <gazebo reference="base_link">
+        <material>Gazebo/Gray</material>
+        <gravity>true</gravity>
+        <selfCollide>false</selfCollide>
+    </gazebo>
+
+    <gazebo reference="shoulder_link">
+        <material>Gazebo/Blue</material>
+        <selfCollide>false</selfCollide>
+    </gazebo>
+
+    <gazebo reference="arm_link">
+        <material>Gazebo/Gray</material>
+        <selfCollide>false</selfCollide>
+    </gazebo>
+
+    <gazebo reference="elbow_link">
+        <material>Gazebo/Blue</material>
+        <selfCollide>false</selfCollide>
+    </gazebo>
+
+    <gazebo reference="forearm_link">
+        <material>Gazebo/Gray</material>
+        <selfCollide>false</selfCollide>
+    </gazebo>
+
+    <gazebo reference="wrist_link">
+        <material>Gazebo/Blue</material>
+        <selfCollide>false</selfCollide>
+    </gazebo>
+
+    <gazebo reference="hand_link">
+        <material>Gazebo/Gray</material>
+        <selfCollide>false</selfCollide>
+    </gazebo>
+
+    <!-- 夹爪部分 -->
+    <gazebo reference="gripper_base_link">
+        <material>Gazebo/Green</material>
+        <selfCollide>false</selfCollide>
+    </gazebo>
+
+    <gazebo reference="gripper_left_finger_link">
+        <material>Gazebo/Green</material>
+        <mu1>2000</mu1> 
+        <mu2>1000</mu2> 
+        <kp>300000.0</kp>  
+        <kd>15.0</kd>       
+    </gazebo>
+
+    <gazebo reference="gripper_right_finger_link">
+        <material>Gazebo/Green</material>
+        <mu1>2000</mu1> 
+        <mu2>1000</mu2> 
+        <kp>300000.0</kp>  
+        <kd>15.0</kd>  
+    </gazebo>
+
+    <!--相机-->
+    <gazebo reference="camera_link"> 
+        <sensor type="depth" name="camera_sensor"> 
+            <plugin name="depth_camera" filename="libgazebo_ros_camera.so"> 
+                <frame_name>camera_optical_link</frame_name> 
+            </plugin> 
+            <always_on>true</always_on>
+            <update_rate>10</update_rate>
+            <camera name="camera"> 
+                <horizontal_fov>1.5009831567</horizontal_fov> 
+                <image>
+                    <width>800</width> 
+                    <height>600</height> 
+                    <format>R8G8B8</format> 
+                </image> 
+                <distortion> 
+                    <k1>0.0</k1>
+                    <k2>0.0</k2>
+                    <k3>0.0</k3>
+                    <p1>0.0</p1>
+                    <p2>0.0</p2> 
+                    <center>0.5 0.5</center> 
+                </distortion>
+            </camera>
+        </sensor>
+    </gazebo>
+
+    <!-- ros2_control for Gazebo - 简化版本 -->
+    <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+        
+        <!-- 机械臂关节 - 简化接口 -->
+        <joint name="joint1">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="joint2">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="joint3">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="joint4">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="joint5">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="joint6">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <!-- 夹爪关节 -->
+        <joint name="gripper_left_finger_joint">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="gripper_right_finger_joint">
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+            <param name="mimic">gripper_left_finger_joint</param>
+            <param name="multiplier">-1.0</param>
+        </joint>
+    </ros2_control>
+
+    <!-- Gazebo 插件 - 简化版本 -->
+    <gazebo>
+        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+            <parameters>$(find myrobot_moveit_config)/config/ros2_controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
+
+    <!-- Gazebo Grasp Fix 插件 -->
+    <gazebo>
+        <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
+            <arm>
+                <arm_name>my_robot_arm</arm_name>
+                <palm_link>hand_link</palm_link>
+                <gripper_link>gripper_left_finger_link</gripper_link>
+                <gripper_link>gripper_right_finger_link</gripper_link>
+            </arm>
+            <forces_angle_tolerance>120</forces_angle_tolerance>
+            <update_rate>150</update_rate>
+            <grip_count_threshold>3</grip_count_threshold>
+            <max_grip_count>6</max_grip_count>
+            <release_tolerance>0.008</release_tolerance>
+            <disable_collisions_on_attach>true</disable_collisions_on_attach>
+        </plugin>
+    </gazebo>
+
+</robot>

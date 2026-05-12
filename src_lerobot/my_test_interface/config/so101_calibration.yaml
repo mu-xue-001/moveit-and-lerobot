@@ -1,0 +1,25 @@
+generated: '2026-05-02T21:40:43.477055'
+joint_1:
+  range_min: 722
+  range_max: 3377
+  homing_offset: 2049
+joint_2:
+  range_min: 869
+  range_max: 3225
+  homing_offset: 2047
+joint_3:
+  range_min: 875
+  range_max: 3080
+  homing_offset: 1977
+joint_4:
+  range_min: 864
+  range_max: 3205
+  homing_offset: 2034
+joint_5:
+  range_min: 204
+  range_max: 4027
+  homing_offset: 2115
+joint_6:
+  range_min: 2038
+  range_max: 3496
+  homing_offset: 2067

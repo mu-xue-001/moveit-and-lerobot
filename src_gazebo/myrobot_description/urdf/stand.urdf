@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot name="stand">
+  <material name="Wood">
+    <color rgba="0.55 0.35 0.20 1.0"/>
+  </material>
+
+  <link name="stand_link">
+    <visual>
+      <geometry>
+        <box size="0.15 0.15 0.05"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="Wood"/>
+    </visual>
+    
+    <collision>
+      <geometry>
+        <box size="0.15 0.15 0.05"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+    
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.0009375" ixy="0" ixz="0" 
+               iyy="0.0009375" iyz="0" 
+               izz="0.0009375"/>
+      <origin xyz="0 0 0"/>
+    </inertial>
+  </link>
+
+  <gazebo reference="stand_link">
+    <material>Gazebo/Wood</material>
+    <mu1>0.5</mu1>
+    <mu2>0.5</mu2>
+    <kp>30000.0</kp>
+    <kd>15.0</kd>
+    <static>true</static>
+  </gazebo>
+</robot>

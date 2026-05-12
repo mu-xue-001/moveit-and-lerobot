@@ -1,0 +1,16 @@
+# ROS2
+build/
+install/
+log/
+
+# vscode
+.vscode/
+
+# gazebo / db
+*.db
+*.db-shm
+*.db-wal
+
+# python
+__pycache__/
+*.pyc
