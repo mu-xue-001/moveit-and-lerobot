@@ -1,1 +1,13 @@
 # moveit-and-lerobot
+一共两个文件夹分别为纯仿真的gazebo和操控真实机械臂的lerobot
+两个单独复制出去改会src然后colcon build 和source install/setup.bash
+两个文件夹的moveit配置已经进行过修改，可以进行ompl的算法的修改
+纯仿真文件夹需要先打开gazebo再打开moveit，由于进行过URDF修改demo.launch无法正常使用
+首先启动ros2 launch myrobot_moveit_config gazebo.launch.py
+启动ros2 launch myrobot_moveit_config my_moveit_rviz.launch.py
+两个都打开后可以进行轨迹规划，可启动rqt进行摄像头画面查看
+
+lerobot文件夹用moveit控制lerobot机械臂
+首先运行ros2 launch my_test_moveit_config demo.launch.py启动轨迹规划
+运行ros2 run so101_hw_interface so101_motor_bridge实现电脑和机械臂的信号交换，启动之后机械臂进入中位状态
+运行python3 ~/my_test_ws/src/my_test_description/launch/traj_to_jointstate.py将轨迹规划信号转换成机械臂能够识别信号
