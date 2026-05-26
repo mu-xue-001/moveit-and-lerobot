@@ -8,6 +8,7 @@
 两个都打开后可以进行轨迹规划，可启动rqt进行摄像头画面查看
 
 lerobot文件夹用moveit控制lerobot机械臂
+需要先校准机械臂，运行so101_calibrate.py进行校准，校准方式参考lerobot官方文档，完成后进入my_test_interface文件夹下config文件夹修改so101_calibration.yaml中夹爪中间位置值，使其接近最小值。
 首先运行ros2 launch my_test_moveit_config demo.launch.py启动轨迹规划
 运行ros2 run so101_hw_interface so101_motor_bridge实现电脑和机械臂的信号交换，启动之后机械臂进入中位状态
 运行python3 ~/my_test_ws/src/my_test_description/launch/traj_to_jointstate.py将轨迹规划信号转换成机械臂能够识别信号
